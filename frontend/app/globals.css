@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fafafa;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+   
+ 
+  /* Cards, Header, Product Cards */
+  --white: #ffffff;
+
+  /* Main Button, CTA, Price, Active Link */
+  --color-primary: #ff6b00;
+  --color-primary-hover: #e85f00;
+
+  /* Brand, Heading, Trust Section */
+  --color-dark-green: #123524;
+
+  /* Product Heading, Premium Text */
+  --color-dark-brown: #3b2418;
+
+  /* Section Background */
+  --color-cream: #fff8ed;
+
+  /* Badge, Hover Background */
+  --color-light-orange: #fff0e0;
+  /* Trust Badge Background */
+  --color-light-green: #eaf4ec;
+
+  /* Main Text */
+  --color-text: #292929;
+  /* Description / Secondary Text */
+  --color-muted: #737373;
+  /* Card/Input Border */
+  --color-border: #e7e1d8;
+
+  /* Stock / Success Message */
+  --color-success: #2e7d32;
+  /* Error / Out of Stock */
+  --color-error: #d32f2f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: hindSiliguri, inter, notoSansBengali, sans-serif;
+}
