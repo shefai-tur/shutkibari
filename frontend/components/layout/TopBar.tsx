@@ -9,7 +9,7 @@ export default function TopBar() {
             <span>
               <Truck />
             </span>{" "}
-            <span>সারা বাংলাদেশে ক্যাশ অন ডেলিভারি Shefaitur rahman</span>
+            <span>সারা বাংলাদেশে ক্যাশ অন ডেলিভারি</span>
           </li>
           <li className="flex gap-2 items-center font-hind-siliguri font-medium">
             <span>
