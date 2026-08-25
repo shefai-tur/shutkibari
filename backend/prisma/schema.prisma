@@ -6,12 +6,16 @@ datasource db {
   provider = "mysql"
 }
 
-model user {
+model User {
   id        Int       @id @default(autoincrement())
   name      String
   email     String    @unique(map: "User_email_key")
   password  String?
   role      user_role @default(CUSTOMER)
+
+  emailVerified Boolean   @default(false)
+  emailVerificationTokens EmailVerificationToken[]
+
   createdAt DateTime  @default(now())
  updatedAt DateTime @updatedAt
   googleId  String?   @unique(map: "User_googleId_key")
@@ -20,4 +24,17 @@ model user {
 enum user_role {
   CUSTOMER
   ADMIN
+}
+
+model EmailVerificationToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    Int
+  expiresAt DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
 }

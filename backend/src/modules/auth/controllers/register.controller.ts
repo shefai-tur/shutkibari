@@ -4,6 +4,10 @@ import prisma from "../../../lib/prisma.js";
 import { registerSchema } from "../validators/auth.validator.js";
 import { generateToken } from "../../../utils/jwt.js";
 
+import { createEmailVerificationToken } from "../services/email-verification.service.js";
+
+import { sendVerificationEmail } from "../services/email.service.js";
+
 export const register = async (req: Request, res: Response) => {
   try {
     // validate Request Body
@@ -45,29 +49,39 @@ export const register = async (req: Request, res: Response) => {
         password: hashedPassword,
       },
     });
+    // emailVerificationToken
+    const verificationToken = await createEmailVerificationToken(user.id);
 
-    // 5. Generate JWT
-    const token = generateToken(user.id);
+    await sendVerificationEmail(user.email, user.name, verificationToken);
 
-    // 6. Set HttpOnly Cookie
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
-
-    // 7. Response
     return res.status(201).json({
       success: true,
-      message: "Registration successful",
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      },
+      message:
+        "Registration successful. Please check your email to verify your account.",
+      user,
     });
+    // 5. Generate JWT
+    // const token = generateToken(user.id);
+
+    // 6. Set HttpOnly Cookie
+    // res.cookie("token", token, {
+    //   httpOnly: true,
+    //   secure: process.env.NODE_ENV === "production",
+    //   sameSite: "lax",
+    //   maxAge: 7 * 24 * 60 * 60 * 1000,
+    // });
+
+    // 7. Response
+    // return res.status(201).json({
+    //   success: true,
+    //   message: "Registration successful",
+    //   user: {
+    //     id: user.id,
+    //     name: user.name,
+    //     email: user.email,
+    //     role: user.role,
+    //   },
+    // });
   } catch (error) {
     console.error("Register error:", error);
 
